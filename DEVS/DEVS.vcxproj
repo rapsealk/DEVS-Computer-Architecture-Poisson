@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -152,12 +152,14 @@
     <ClCompile Include="kernel\src\Port.cpp" />
     <ClCompile Include="src\Generator.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\PoissonRandomNumberGenerator.cpp" />
     <ClCompile Include="src\Process.cpp" />
     <ClCompile Include="src\Transducer.cpp" />
     <ClCompile Include="src\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Generator.hpp" />
+    <ClInclude Include="include\PoissonRandomNumberGenerator.hpp" />
     <ClInclude Include="include\Process.hpp" />
     <ClInclude Include="include\Transducer.hpp" />
     <ClInclude Include="include\Utility.hpp" />

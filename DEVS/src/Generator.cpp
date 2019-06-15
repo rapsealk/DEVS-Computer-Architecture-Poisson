@@ -1,13 +1,13 @@
 #include "../include/Generator.hpp"
 
 #include <iostream>
+#include <random>
 
-Generator::Generator() : Atomic() {
-	SetName("Generator");
-}
+Generator::Generator()
+	: Generator::Generator("Generator") { }
 
-Generator::Generator(std::string EName) : Atomic(EName) {
-	SetName(EName);
+Generator::Generator(std::string entity_name) : Atomic(entity_name) {
+	SetName(entity_name);
 }
 
 void Generator::ExtTransitionFN(double E, DevsMessage X) {
@@ -18,11 +18,14 @@ void Generator::ExtTransitionFN(double E, DevsMessage X) {
 
 void Generator::IntTransitionFN(void) {
 	Logln(Name + "(INT) --> Sigma: " + std::to_string(Sigma) + " / When: " + std::to_string(AddTime(GetLastEventTime(), Sigma)));
-	if (Phase == "busy") { HoldIn("busy", InterArrivalTime); }
-	else { Passivate(); }
+	if (Phase == "busy") {
+		HoldIn("busy", InterArrivalTime);
+	} else {
+		Passivate();
+	}
 }
 
-void Generator::OutputFN(void){
+void Generator::OutputFN(void) {
 	Logln(Name + "(OUT) --> Phase: " + Phase + " / Sigma: " + std::to_string(Sigma) + " / When: " + std::to_string(GetNextEventTime()));
 
 	if (Phase == "busy") {
@@ -31,7 +34,7 @@ void Generator::OutputFN(void){
 	else MakeContent();
 }
 
-void Generator::InitializeFN(void){
+void Generator::InitializeFN(void) {
 	InterArrivalTime = 3;
 	Count = 0;
 
