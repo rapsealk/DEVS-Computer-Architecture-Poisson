@@ -1,0 +1,15 @@
+.vs/
+Debug/
+*.o
+.vscode/ipch/
+
+# macOS
+.DS_Store
+
+# CMake
+cmake_install.cmake
+CMakeFiles/
+CMakeCache.txt
+
+# Makefile
+Makefile
