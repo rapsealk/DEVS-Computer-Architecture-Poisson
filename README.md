@@ -3,6 +3,10 @@
 A small C++ implementation of the **DEVS** formalism together with a classic
 queueing example whose job arrivals are driven by a **Poisson distribution**.
 
+> For a detailed write-up of the formalism, the model, the Poisson generator, an
+> annotated simulation trace, and what the results demonstrate, see
+> [`docs/POISSON_DEVS_REPORT.md`](docs/POISSON_DEVS_REPORT.md).
+
 ## What is DEVS?
 
 DEVS (Discrete Event System Specification) is a formalism for modelling systems
