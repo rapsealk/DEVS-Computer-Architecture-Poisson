@@ -1,6 +1,9 @@
 #ifndef __PROCESS_HPP__
 #define __PROCESS_HPP__
 
+#include <queue>
+#include <string>
+
 #include "../kernel/include/Log.hpp"
 #include "../kernel/include/Atomic.hpp"
 
@@ -8,8 +11,7 @@ class Process : public Atomic {
 public:
     std::string JobID;
 	double PTime;
-    std::string Queue[50];
-    int Front,Tail;
+    std::queue<std::string> Queue;
 public:
 	Process(std::string entity_name);
 
