@@ -11,6 +11,6 @@ $ brew install cmake
 $ cd DEVS
 $ cmake CMakeLists.txt
 $ make
-$ ./main.out        # single-server Poisson queue
-$ ./balancer.out    # weighted load-balancing across 3 servers
+$ ./main.out         # single-server Poisson queue
+$ ./balancer.out     # weighted load-balancing across 3 servers (random; "rr" for round-robin)
 ```

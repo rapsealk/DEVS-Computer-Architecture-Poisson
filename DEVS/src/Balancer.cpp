@@ -1,15 +1,25 @@
 #include "../include/Balancer.hpp"
 
-Balancer::Balancer(std::string entity_name, std::initializer_list<double> weights)
-	: Atomic(entity_name), NumServers((int) weights.size()), picker(weights) {
+#include "../include/WeightedRandomNumberGenerator.hpp"
+#include "../include/WeightedRoundRobinGenerator.hpp"
+
+Balancer::Balancer(std::string entity_name, std::initializer_list<double> weights, Strategy strategy)
+	: Atomic(entity_name), NumServers((int) weights.size()),
+	  selector(strategy == Strategy::WeightedRoundRobin
+	           ? (WeightedSelector*) new WeightedRoundRobinGenerator(weights)
+	           : (WeightedSelector*) new WeightedRandomNumberGenerator(weights)) {
 	SetName(entity_name);
+}
+
+Balancer::~Balancer() {
+	delete selector;
 }
 
 void Balancer::ExtTransitionFN(double E, DevsMessage X) {
 	if (X.ContentPort() == "in") {
 		if (Tail < 100) {
 			Queue[Tail] = X.ContentValue();
-			Route[Tail] = picker.Generate();   // decide the target on arrival
+			Route[Tail] = selector->Generate();   // decide the target on arrival
 			Tail++;
 		}
 		if (Phase == "busy") Continue();

@@ -18,8 +18,8 @@ SET(KERNEL_HEADERS kernel/include/Atomic.hpp kernel/include/Coupled.hpp kernel/i
 SET(KERNEL_SOURCES kernel/src/Atomic.cpp kernel/src/Coupled.cpp kernel/src/Digraph.cpp kernel/src/Entity.cpp kernel/src/Entstr.cpp kernel/src/List.cpp kernel/src/Log.cpp kernel/src/MList.cpp kernel/src/Message.cpp kernel/src/Model.cpp kernel/src/Port.cpp)
 SET(HEADER_FILES include/Generator.hpp include/Process.hpp include/Transducer.hpp include/Utility.hpp include/ExponentialRandomNumberGenerator.hpp)
 SET(SOURCE_FILES src/Generator.cpp src/Process.cpp src/Transducer.cpp src/Utility.cpp src/ExponentialRandomNumberGenerator.cpp)
-SET(BALANCER_HEADERS include/Balancer.hpp include/WeightedRandomNumberGenerator.hpp)
-SET(BALANCER_SOURCES src/Balancer.cpp src/WeightedRandomNumberGenerator.cpp)
+SET(BALANCER_HEADERS include/Balancer.hpp include/WeightedSelector.hpp include/WeightedRandomNumberGenerator.hpp include/WeightedRoundRobinGenerator.hpp)
+SET(BALANCER_SOURCES src/Balancer.cpp src/WeightedRandomNumberGenerator.cpp src/WeightedRoundRobinGenerator.cpp)
 
 ADD_EXECUTABLE( main.out src/main.cpp ${KERNEL_HEADERS} ${KERNEL_SOURCES} ${HEADER_FILES} ${SOURCE_FILES} )
 ADD_EXECUTABLE( balancer.out src/balancer_main.cpp ${KERNEL_HEADERS} ${KERNEL_SOURCES} ${HEADER_FILES} ${SOURCE_FILES} ${BALANCER_HEADERS} ${BALANCER_SOURCES} )

@@ -1,3 +1,5 @@
+#include <string>
+
 #include "../kernel/include/Log.hpp"
 #include "../kernel/include/Entstr.hpp"
 
@@ -6,12 +8,17 @@
 #include "../include/Process.hpp"
 #include "../include/Balancer.hpp"
 
-int main()
+int main(int argc, char** argv)
 {
+	// Strategy: "rr" selects weighted round-robin, otherwise weighted-random.
+	Balancer::Strategy strategy = Balancer::Strategy::WeightedRandom;
+	if (argc > 1 && std::string(argv[1]) == "rr")
+		strategy = Balancer::Strategy::WeightedRoundRobin;
+
 	EntStr *efp = new EntStr("ef-p");
 
 	// Weighted dispatcher fanning out to three servers (weights 5:3:2 = 50% / 30% / 20%).
-	efp->AddItem(new Balancer("Balancer", { 5.0, 3.0, 2.0 }));
+	efp->AddItem(new Balancer("Balancer", { 5.0, 3.0, 2.0 }, strategy));
 	efp->AddItem(new Process("Process-0"));
 	efp->AddItem(new Process("Process-1"));
 	efp->AddItem(new Process("Process-2"));
