@@ -13,17 +13,12 @@ public:
 //	int     ProblemLevel;
 	int     Count;
 
-	// Mean number of events per unit time (lambda) for the arrival process.
-	double  ArrivalMean;
-
 private:
-	// Draws the (Poisson-distributed) inter-arrival time of each new job.
 	PoissonRandomNumberGenerator arrivalGenerator;
 
 public:
 	Generator();
 	Generator(std::string);
-	Generator(std::string, double);
 
     void ExtTransitionFN(double,DevsMessage);
 	void IntTransitionFN(void);

@@ -120,13 +120,7 @@ void Generator::IntTransitionFN(void) {
 }
 ```
 
-Every time the generator fires, it emits a job (`OutputFN`) and then draws a fresh Poisson gap to schedule the following one. The DEVS engine does not care that the duration is random — `Sigma` can be a constant, a formula, or a random variate. This makes the model a **stochastic DEVS** model, the standard way to inject real-world randomness into an event-driven simulation.
-
-The mean is configurable through the constructor (default `3.0`):
-
-```cpp
-efp->AddItem(new Generator("genr", 5.0));   // λ = 5.0
-```
+Every time the generator fires, it emits a job (`OutputFN`) and then draws a fresh Poisson gap to schedule the following one. The DEVS engine does not care that the duration is random — `Sigma` can be a constant, a formula, or a random variate. This makes the model a **stochastic DEVS** model, the standard way to inject real-world randomness into an event-driven simulation. The mean λ is set by the `ARRIVAL_MEAN` constant in `Generator.cpp` (default `3.0`).
 
 ---
 
