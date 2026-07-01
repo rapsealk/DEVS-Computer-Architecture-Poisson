@@ -1,4 +1,5 @@
 #include "../include/Process.hpp"
+#include "../include/Utility.hpp"
 
 #include <string>
 
@@ -10,24 +11,16 @@ void Process::ExtTransitionFN(double Time, DevsMessage MSG) {
 	Log(Name + "(EXT) --> ");
 	if (MSG.ContentPort() == "in") {
 
-		// Put job into the Queue
-		if (Tail < 50)
-		{
-			try {
-				Queue[Tail++] = MSG.ContentValue();
-				Log(MSG.ContentPort() + ":" + JobID);
-			}
-			catch (std::length_error e) {
-				Logerr(e);
-			}
-		}
-		
+		// Put job into the Queue (unbounded, so a growing backlog is never dropped)
+		Queue.push(MSG.ContentValue());
+		Log(MSG.ContentPort() + ":" + JobID);
+
 		if (Phase == "busy"){
 			Continue();
 		}
 		else
 		{
-			if (Front != Tail)
+			if (!Queue.empty())
 				HoldIn("busy",0.0);
 		}
 	}
@@ -39,10 +32,11 @@ void Process::IntTransitionFN(void) {
 	Log(Name + "(INT) --> ");
 	if (Phase == "busy"){
 		// Get job from the Queue
-		if(Front != Tail)
+		if(!Queue.empty())
 		{
 			// processing
-			JobID = Queue[Front++];
+			JobID = Queue.front();
+			Queue.pop();
 			Log(" process : " + JobID);
 			HoldIn("busy", PTime);
 		}
@@ -66,5 +60,5 @@ void Process::OutputFN(void) {
 void Process::InitializeFN(void){
 	PTime = (double) 7.0;
 	Passivate();
-	Front = Tail = 0;
+	ClearMessageQueue(Queue);
 }
