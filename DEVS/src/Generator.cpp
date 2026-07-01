@@ -1,12 +1,12 @@
 #include "../include/Generator.hpp"
 
-#include <iostream>
-#include <random>
+static const double ARRIVAL_MEAN = 3.0;   // mean inter-arrival time (rate lambda = 1/3)
 
 Generator::Generator()
 	: Generator::Generator("Generator") { }
 
-Generator::Generator(std::string entity_name) : Atomic(entity_name) {
+Generator::Generator(std::string entity_name)
+	: Atomic(entity_name), arrivalGenerator(ARRIVAL_MEAN) {
 	SetName(entity_name);
 }
 
@@ -19,6 +19,8 @@ void Generator::ExtTransitionFN(double E, DevsMessage X) {
 void Generator::IntTransitionFN(void) {
 	Logln(Name + "(INT) --> Sigma: " + std::to_string(Sigma) + " / When: " + std::to_string(AddTime(GetLastEventTime(), Sigma)));
 	if (Phase == "busy") {
+		InterArrivalTime = arrivalGenerator.Generate();
+		Logln(Name + "(INT) --> Next inter-arrival time (exp, mean=" + std::to_string(ARRIVAL_MEAN) + "): " + std::to_string(InterArrivalTime));
 		HoldIn("busy", InterArrivalTime);
 	} else {
 		Passivate();
@@ -35,8 +37,7 @@ void Generator::OutputFN(void) {
 }
 
 void Generator::InitializeFN(void) {
-	InterArrivalTime = 3;
 	Count = 0;
 
-	HoldIn("busy", 0.0);
+	HoldIn("busy", 0.0);   // emit the first job immediately; IntTransitionFN draws the next gap
 }
