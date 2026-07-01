@@ -260,12 +260,7 @@ toward stability.
 From the [`DEVS`](../DEVS) directory:
 
 ```sh
-# With CMake
 cmake CMakeLists.txt && make && ./main.out
-
-# Or directly with g++ (C++11)
-g++ -std=c++11 -I kernel/include -I include src/*.cpp kernel/src/*.cpp -o main.out
-./main.out
 ```
 
 On Windows, open [`DEVS.sln`](../DEVS.sln) in Visual Studio and build the `DEVS`

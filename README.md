@@ -103,14 +103,6 @@ make
 
 This produces an executable named `main.out`.
 
-If CMake is not available you can compile directly with `g++` (C++11):
-
-```sh
-cd DEVS
-g++ -std=c++11 -I kernel/include -I include \
-    src/*.cpp kernel/src/*.cpp -o main.out
-```
-
 On Windows, open [`DEVS.sln`](DEVS.sln) in Visual Studio and build the `DEVS`
 project.
 
