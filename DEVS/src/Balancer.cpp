@@ -22,6 +22,7 @@ void Balancer::ExtTransitionFN(double E, DevsMessage X) {
 			Route[Tail] = selector->Generate();   // decide the target on arrival
 			Tail++;
 		}
+		else Logln(Name + "(EXT) --> queue full (100), dropping " + X.ContentValue());
 		if (Phase == "busy") Continue();
 		else if (Front != Tail) HoldIn("busy", 0.0);
 	}
@@ -42,16 +43,19 @@ void Balancer::IntTransitionFN(void) {
 			Logln(Name + "(INT) --> " + Queue[Front] + " -> server " + std::to_string(k)
 				+ " (routed so far: server" + std::to_string(k) + "=" + std::to_string(RouteCount[k]) + ")");
 			Front++;
-			if (Front != Tail) HoldIn("busy", 0.0);   // drain the rest at this instant
-			else Passivate();
 		}
-		else Passivate();
+		if (Front != Tail) {
+			HoldIn("busy", 0.0);   // drain the rest at this instant
+		} else {
+			Front = Tail = 0;      // queue emptied; reset the linear buffer so it stays bounded
+			Passivate();
+		}
 	}
 	else Continue();
 }
 
 void Balancer::InitializeFN(void) {
 	Front = Tail = 0;
-	for (int i = 0; i < NumServers; i++) RouteCount[i] = 0;
+	RouteCount.assign(NumServers, 0);
 	Passivate();
 }

@@ -1,6 +1,7 @@
 #ifndef __BALANCER_HPP__
 #define __BALANCER_HPP__
 
+#include <vector>
 #include <initializer_list>
 
 #include "../kernel/include/Log.hpp"
@@ -18,8 +19,8 @@ public:
 	int         Route[100];   // target server for each queued job
 	int         Front, Tail;
 
-	int         NumServers;
-	int         RouteCount[16];   // per-server tally, for verification
+	int              NumServers;
+	std::vector<int> RouteCount;   // per-server tally, for verification
 
 private:
 	WeightedSelector* selector;   // owns the chosen strategy
