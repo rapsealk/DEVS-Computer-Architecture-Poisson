@@ -4,17 +4,17 @@
 #include "../kernel/include/Log.hpp"
 #include "../kernel/include/Atomic.hpp"
 
-#include "PoissonRandomNumberGenerator.hpp"
+#include "ExponentialRandomNumberGenerator.hpp"
 
 class Generator : public Atomic {
 public:
-	int     InterArrivalTime;
+	double  InterArrivalTime;
 //	int     ProcessingTime;
 //	int     ProblemLevel;
 	int     Count;
 
 private:
-	PoissonRandomNumberGenerator arrivalGenerator;
+	ExponentialRandomNumberGenerator arrivalGenerator;
 
 public:
 	Generator();
